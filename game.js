@@ -40,7 +40,7 @@ function render() {
   player.render(ctx);
   renderDialogue(ctx);
 
-  // Show current dimension (for testing)
+  // Debug info
   ctx.fillStyle = "white";
   ctx.font = "16px Arial";
   ctx.fillText("Realm: " + currentDimension, 10, 20);
@@ -52,6 +52,7 @@ function checkPortalCollision() {
   for (let portal of portals) {
     if (player.x === portal.x && player.y === portal.y) {
       currentDimension = portal.destination;
+      gameState.currentDimension = currentDimension;
       map = generateMap(currentDimension);
       portals = generatePortals();
       npcs = generateNPCs();
@@ -68,3 +69,14 @@ function checkPortalCollision() {
 document.addEventListener("keydown", (e) => {
   if (e.key === "s") saveProgress();
 });
+
+let keys = {};
+window.addEventListener("keydown", e => keys[e.key] = true);
+window.addEventListener("keyup", e => keys[e.key] = false);
+
+function handleInput() {
+  if (keys["ArrowUp"] || keys["w"]) player.y--;
+  if (keys["ArrowDown"] || keys["s"]) player.y++;
+  if (keys["ArrowLeft"] || keys["a"]) player.x--;
+  if (keys["ArrowRight"] || keys["d"]) player.x++;
+}
