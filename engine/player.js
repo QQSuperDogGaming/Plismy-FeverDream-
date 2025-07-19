@@ -9,3 +9,16 @@ function handleInput() {
   if (keys["ArrowLeft"] || keys["a"]) player.x--;
   if (keys["ArrowRight"] || keys["d"]) player.x++;
 }
+
+function createPlayer() {
+  return {
+    x: gameState.player.x,
+    y: gameState.player.y,
+    angelType: gameState.player.angelType,
+    update() {},
+    render(ctx) {
+      ctx.fillStyle = "white";
+      ctx.fillRect(this.x * 32, this.y * 32, 32, 32);
+    }
+  };
+}
